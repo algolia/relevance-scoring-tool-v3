@@ -6,7 +6,7 @@
 
 Purpose of this tool is to check how relevant Algolia results are. It is mainly used to check relevancy while developing and improving language handling.
 
-### How to setup
+## How to setup
 
 The app is available on [http://relevance-scoring-tool.herokuapp.com/](http://relevance-scoring-tool.herokuapp.com/). You can run only one test from this app, feel free to clone this repository and deploy it to Heroku if you need to run multiple tests simultaneously.
 
@@ -22,6 +22,10 @@ Using the app only requires you to update some environment variables from the [H
 
 - `QUERIES`: Comma separated list of queries to test.
 
-### Results
+## Notes
+
+**It is important NOT TO change the Ranking Formula during the testing period, to ensure all testers have the same results for a given query.**
+
+## Results
 
 Results are pushed per tester on the App previously specified. You can use in any want you want afterwards.
