@@ -1,0 +1,75 @@
+body {
+  padding-top: 24px;
+}
+
+.rs {
+  &-Queries {
+    &-actions {
+      //box-shadow: 0 2px 5px 0 #e3e5ec;
+    }
+  }
+}
+
+.ais {
+  &-Hits {
+    margin-bottom: 64px;
+
+    picture, section {
+      display: inline-block;
+      vertical-align: top;
+    }
+
+    picture {
+      width: 25%;
+
+      img {
+        width: 100%;
+      }
+    }
+
+    section {
+      width: calc(75% - 8px);
+      display: inline-block;
+      margin-left: 8px;
+    }
+
+    &-item {
+      width: calc(50% - 1rem);
+      border: none;
+      position: relative;
+      min-height: 124px;
+    }
+
+    &-content {
+      margin: 0;
+      line-height: 1.3;
+
+      &:not(:last-of-type) {
+        margin-bottom: 4px;
+      }
+
+      &:last-of-type {
+        margin-bottom: 6px;
+      }
+    }
+
+    &-position {
+      position: absolute;
+      display: block;
+      top: 0;
+      right: 16px;
+      background: #3a4570;
+      padding: 4px 8px 6px 8px;
+      color: #fff;
+      font-size: 14px;
+      border-bottom-left-radius: 4px;
+      border-bottom-right-radius: 4px;
+    }
+  }
+
+  &-SearchBox {
+    &-title {
+      //color: #3a4570;
+    }
+  }
+}
