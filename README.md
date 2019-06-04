@@ -28,4 +28,6 @@ Using the app only requires you to update some environment variables from the [H
 
 ## Results
 
-Results are pushed per tester on the App previously specified. You can use in any want you want afterwards.
+Results are pushed per tester on the App previously specified. You can use the data in any want you want afterwards either from the Algolia Dashboard (with faceting and all of that) or from API Clients.
+
+A summary is also available at this address [http://relevance-scoring-tool.herokuapp.com/results](http://relevance-scoring-tool.herokuapp.com/results) from which you can see and download a .csv file.
