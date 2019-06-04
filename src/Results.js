@@ -1,5 +1,6 @@
 import React from 'react';
 import axios from 'axios';
+import { CSVLink } from "react-csv";
 
 class Results extends React.Component {
 
@@ -7,6 +8,7 @@ class Results extends React.Component {
         super(props);
 
         this.state = {
+            selectedTester: false,
             testers: [],
             results: []
         }
@@ -23,15 +25,26 @@ class Results extends React.Component {
             })
     };
 
+    getResultsForTester = tester => {
+        axios.get(`/api/results/${tester}`)
+            .then(res => {
+                this.setState({ results: res.data });
+            })
+    };
+
+    selectTester = selectedTester => {
+        this.setState({ selectedTester }, () => this.getResultsForTester(selectedTester));
+    };
+
     render() {
-        const { testers } = this.state;
+        const { testers, selectedTester, results } = this.state;
 
         return (
             <React.Fragment>
-                <div className="row mb-3">
+                <div className="row mb-4">
                     <div className="col">
                         <h3>
-                            Relevance Scoring Results
+                            Relevance Scoring
                         </h3>
                     </div>
                 </div>
@@ -40,14 +53,50 @@ class Results extends React.Component {
                         <h4>Testers</h4>
                         <ul>
                             {testers.map((tester, idx) => (
-                                <li key={idx}>
-                                    <button className="btn btn-link" type="button">{tester.tester.split('_').pop()} <small>{tester.nbQueries}</small></button>
+                                <li key={idx} onClick={() => this.selectTester(tester.tester)}>
+                                    {tester.tester.split('_').pop()} ({tester.nbQueries})
                                 </li>
                             ))}
                         </ul>
                     </div>
                     <div className="col-9">
                         <h4>Results</h4>
+                        {(!selectedTester || (selectedTester && !results.length)) &&
+                            <p>No results to display.</p>
+                        }
+
+                        {selectedTester && results.length &&
+                        <React.Fragment>
+                            <p className="text-right mb-1">
+                                <CSVLink data={results} filename={`${selectedTester}.csv`}>
+                                    <small>Download as .csv file</small>
+                                </CSVLink>
+                            </p>
+                            <table className="table table-sm table-striped">
+                                <thead>
+                                <tr>
+                                    <th scope="col">Query</th>
+                                    <th scope="col">Status</th>
+                                    <th scope="col">Comment</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                {results.map((result, idx) => (
+                                    <tr key={idx}>
+                                        <th scope="row">{result.query}</th>
+                                        <td>
+                                            {result.status === 'RELEVANT' && <span className="badge badge-pill badge-success">{result.status}</span>}
+                                            {result.status === 'MISPLACED' && <span className="badge badge-pill badge-warning">{result.status}</span>}
+                                            {result.status === 'IRRELEVANT' && <span className="badge badge-pill badge-danger">{result.status}</span>}
+                                            {result.status === 'SKIPPED' && <span className="badge badge-pill badge-info">{result.status}</span>}
+                                        </td>
+                                        <td>{result.comment}</td>
+                                    </tr>
+                                ))}
+                                </tbody>
+                            </table>
+                        </React.Fragment>
+                        }
                     </div>
                 </div>
             </React.Fragment>
