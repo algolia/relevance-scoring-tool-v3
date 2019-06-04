@@ -24,19 +24,36 @@ app.get('/api/settings', (req, res) => {
 });
 
 app.post('/api/answers', (req, res) => {
-    const { appId, indexName, user, query, status, comment, timestamp } = req.body;
+    const { appId, indexName, user, query, queryPosition, status, comment, timestamp } = req.body;
 
     const indexAlgolia = clientAlgolia.initIndex(`${appId}_${indexName}_${user}`);
 
     indexAlgolia.addObject({
         objectID: query,
         query,
+        queryPosition,
         status,
         comment,
         timestamp
     }, (err, { objectID }) => {
         res.json('Answer saved');
     });
+});
+
+app.get('/api/testers', function (req, res) {
+    clientAlgolia.listIndexes((err, content) => {
+        res.json(content.items.map(index => ({ tester: index.name, nbQueries: index.entries })));
+    })
+});
+
+app.get('/api/results/:indexName', function (req, res) {
+    const indexName = req.params.indexName;
+    const indexAlgolia = clientAlgolia.initIndex(indexName);
+    const browser = indexAlgolia.browseAll();
+
+    let hits = [];
+    browser.on('result', content => hits = hits.concat(content.hits));
+    browser.on('end', () => res.json(hits));
 });
 
 app.get('/api', function (req, res) {

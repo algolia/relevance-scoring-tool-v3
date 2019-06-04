@@ -1,5 +1,7 @@
 import React from 'react';
 import { connectHits } from 'react-instantsearch-dom';
+import { Redirect } from "react-router-dom";
+
 import CustomSearchBox from './CustomSearchBox';
 
 const Hits = ({ hits, attributesToDisplay, imageAttribute }) => {
@@ -71,6 +73,10 @@ class Queries extends React.Component {
     render() {
         const { testerEmailAddress, query, queriesCount, attributesToDisplay, imageAttribute } = this.props;
         const { choice, issueDescription } = this.state;
+
+        if (!testerEmailAddress) {
+            return <Redirect to="/" />
+        }
 
         return (
             <div className="rs-Queries">

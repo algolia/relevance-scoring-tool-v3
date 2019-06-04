@@ -45,6 +45,7 @@ class App extends React.Component {
         indexName: this.state.settings.indexName,
         user: this.state.emailAddress,
         query,
+        queryPosition: this.state.currentQueryIndex + 1,
         status,
         comment,
         timestamp: Math.round(+new Date() / 1000)
