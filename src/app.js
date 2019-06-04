@@ -2,7 +2,7 @@ import React from 'react';
 import store from 'store';
 import axios from 'axios';
 import algoliasearch from 'algoliasearch/lite';
-import { InstantSearch } from 'react-instantsearch-dom';
+import { InstantSearch, Configure } from 'react-instantsearch-dom';
 import { BrowserRouter as Router, Route, Redirect } from "react-router-dom";
 
 import Login from './Login';
@@ -74,12 +74,13 @@ class App extends React.Component {
             <Route path="/login" render={() => <Login onLogin={this.onLogin} />} />
             <Route path="/queries" render={() =>
                 <InstantSearch searchClient={this.searchClient} indexName={settings.indexName}>
-                  <Queries query={settings.queries[currentQueryIndex]}
-                           queriesCount={currentQueryIndex}
-                           onNextQuery={this.onNextQuery}
-                           attributesToDisplay={settings.attributesToDisplay}
-                           imageAttribute={settings.imageAttribute}
-                           testerEmailAddress={emailAddress} />
+                    <Configure hitsPerPage={10} />
+                    <Queries query={settings.queries[currentQueryIndex]}
+                             queriesCount={currentQueryIndex}
+                             onNextQuery={this.onNextQuery}
+                             attributesToDisplay={settings.attributesToDisplay}
+                             imageAttribute={settings.imageAttribute}
+                             testerEmailAddress={emailAddress} />
                 </InstantSearch>
             } />
             <Route path="/results" component={Results} />
