@@ -8,9 +8,14 @@ Purpose of this tool is to check how relevant Algolia results are. It is mainly 
 
 ## How to setup
 
-The app is available on [http://relevance-scoring-tool.herokuapp.com/](http://relevance-scoring-tool.herokuapp.com/). You can run only one test from this app, feel free to clone this repository and deploy it to Heroku if you need to run multiple tests simultaneously.
+The app is available on [http://relevance-scoring-tool.herokuapp.com/](http://relevance-scoring-tool.herokuapp.com/). 
 
-Using the app only requires you to update some environment variables from the [Heroku Dashboard](https://dashboard.heroku.com/apps/relevance-scoring-tool/settings). Here's the list:
+You can run only one test from this app, feel free to clone this repository and deploy it to Heroku if you need to run multiple tests simultaneously.
+
+Using the app only requires you to update some environment variables either from a `.env` configuration file or directly from the [Heroku Dashboard](https://dashboard.heroku.com/apps/relevance-scoring-tool/settings).
+
+### Required environment variables
+
 - `RECORDS_APP_ID`: The Application ID that contains the index to test.
 - `RECORDS_INDEX_NAME`: The Index name that contains the records to test.
 - `RECORDS_SEARCH_API_KEY`: The Search API Key related to the previous App and Index.
