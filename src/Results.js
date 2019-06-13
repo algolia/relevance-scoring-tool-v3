@@ -57,7 +57,11 @@ class Results extends React.Component {
   render() {
     const { testers, selectedTester, results, authenticated } = this.state;
 
-    if (authenticated !== true) {
+    if (authenticated === null) {
+      return <p className="text-center h4 mt-4">Loading…</p>;
+    }
+
+    if (authenticated === false) {
       return (
         <>
           <h3>Authentication required.</h3>
