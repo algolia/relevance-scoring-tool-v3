@@ -24,10 +24,15 @@ class App extends React.Component {
   }
 
   componentDidMount() {
-    axios.get(`/api/settings`).then(res => {
-      this.searchClient = algoliasearch(res.data.appId, res.data.searchApiKey);
-      this.setState({ settings: res.data });
-    });
+    axios
+      .get(`https://relevance-scoring-tool.herokuapp.com/api/settings`)
+      .then(res => {
+        this.searchClient = algoliasearch(
+          res.data.appId,
+          res.data.searchApiKey
+        );
+        this.setState({ settings: res.data });
+      });
   }
 
   onLogin = (emailAddress, callback) => {

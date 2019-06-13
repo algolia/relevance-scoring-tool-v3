@@ -23,9 +23,16 @@ class Results extends React.Component {
   }
 
   getTesters = () => {
-    axios.get(`/api/testers?authCode=${this.state.authCode}`).then(res => {
-      this.setState({ testers: res.data });
-    });
+    axios
+      .get(`/api/testers?authCode=${this.state.authCode}`)
+      .then(res => {
+        this.setState({ testers: res.data, authenticated: true });
+      })
+      .catch(err => {
+        if (err.response.status === 401) {
+          this.setState({ authenticated: false });
+        }
+      });
   };
 
   getResultsForTester = tester => {
@@ -33,6 +40,11 @@ class Results extends React.Component {
       .get(`/api/results/${tester}?authCode=${this.state.authCode}`)
       .then(res => {
         this.setState({ results: res.data });
+      })
+      .catch(err => {
+        if (err.response.status === 401) {
+          this.setState({ authenticated: false });
+        }
       });
   };
 
